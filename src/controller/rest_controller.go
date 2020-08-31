@@ -17,6 +17,7 @@ type kcontroller struct{}
 type kcontrollerInterface interface {
 	CreateDeployment(*gin.Context)
 	DeleteDeployment(*gin.Context)
+	GetPods(*gin.Context)
 }
 
 func (k *kcontroller) CreateDeployment(c *gin.Context) {
@@ -27,7 +28,7 @@ func (k *kcontroller) CreateDeployment(c *gin.Context) {
 		c.JSON(restErr.Status(), restErr)
 		return
 	}
-	result, err := services.Kservice.CreateDeployment(c.Request.Context(), &deployment)
+	result, err := services.KDeploymentServices.CreateDeployment(c.Request.Context(), &deployment)
 	if err != nil {
 		c.JSON(err.Status(), err)
 		return
@@ -43,10 +44,20 @@ func (k *kcontroller) DeleteDeployment(c *gin.Context) {
 		c.JSON(restErr.Status(), restErr)
 		return
 	}
-	result, err := services.Kservice.DeleteDeployment(c.Request.Context(), &deployment)
+	result, err := services.KDeploymentServices.DeleteDeployment(c.Request.Context(), &deployment)
 	if err != nil {
 		c.JSON(err.Status(), err)
 		return
 	}
 	c.JSON(http.StatusCreated, *result)
+}
+
+func (k *kcontroller) GetPods(c *gin.Context) {
+
+	result, err := services.KPodServices.GetPods(c.Request.Context())
+	if err != nil {
+		c.JSON(err.Status(), err)
+		return
+	}
+	c.JSON(http.StatusOK, result)
 }

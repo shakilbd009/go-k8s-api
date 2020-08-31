@@ -8,16 +8,16 @@ import (
 	"github.com/shakilbd009/go-utils-lib/rest_errors"
 )
 
-var Kservice kserviceInterface = &kservice{}
+var KDeploymentServices kDeploymentInterface = &kDeploymentService{}
 
-type kservice struct{}
+type kDeploymentService struct{}
 
-type kserviceInterface interface {
+type kDeploymentInterface interface {
 	CreateDeployment(context.Context, *k8s.K8sDeployment) (*k8s.K8sDeployment, rest_errors.RestErr)
 	DeleteDeployment(context.Context, *k8s.K8sDeployment) (*k8s.K8sDeployment, rest_errors.RestErr)
 }
 
-func (*kservice) CreateDeployment(ctx context.Context, k *k8s.K8sDeployment) (*k8s.K8sDeployment, rest_errors.RestErr) {
+func (*kDeploymentService) CreateDeployment(ctx context.Context, k *k8s.K8sDeployment) (*k8s.K8sDeployment, rest_errors.RestErr) {
 
 	if err := k.ValidateCreateDeployment(); err != nil {
 		return nil, err
@@ -29,7 +29,7 @@ func (*kservice) CreateDeployment(ctx context.Context, k *k8s.K8sDeployment) (*k
 	return result, nil
 }
 
-func (*kservice) DeleteDeployment(ctx context.Context, k *k8s.K8sDeployment) (*k8s.K8sDeployment, rest_errors.RestErr) {
+func (*kDeploymentService) DeleteDeployment(ctx context.Context, k *k8s.K8sDeployment) (*k8s.K8sDeployment, rest_errors.RestErr) {
 
 	if err := k.ValidateDeleteDeployment(); err != nil {
 		return nil, err
