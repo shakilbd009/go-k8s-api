@@ -13,6 +13,7 @@ var (
 	container_name  = "container_name"
 	image_version   = "image_version"
 	replicas        = "replicas"
+	token           = "token"
 	required_field  = "required fields are missing"
 )
 
@@ -23,6 +24,7 @@ type K8sDeployment struct {
 	Image          string `json:"image_version,omitempty"`
 	Replicas       int32  `json:"replicas,omitempty"`
 	Status         string `json:"status,omitempty"`
+	Token          string `json:"token,omitempty"`
 	CreationTime   string `json:"creation_time,omitempty"`
 }
 
@@ -46,6 +48,9 @@ func (k *K8sDeployment) ValidateCreateDeployment() rest_errors.RestErr {
 	if k.Replicas == 0 {
 		return rest_errors.NewBadRequestError(fmt.Sprintf(msgTemplate, replicas))
 	}
+	if k.Token == "" {
+		return rest_errors.NewBadRequestError(fmt.Sprintf(msgTemplate, token))
+	}
 	return nil
 }
 
@@ -59,6 +64,9 @@ func (k *K8sDeployment) ValidateDeleteDeployment() rest_errors.RestErr {
 	}
 	if k.DeploymentName == "" {
 		return rest_errors.NewBadRequestError(fmt.Sprintf(msgTemplate, deployment_name))
+	}
+	if k.Token == "" {
+		return rest_errors.NewBadRequestError(fmt.Sprintf(msgTemplate, token))
 	}
 	return nil
 }

@@ -8,9 +8,9 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-func (k *Kpod) GetPods(ctx context.Context, client *kubernetes.Clientset) ([]Kpod, rest_errors.RestErr) {
+func (k *Kpod) GetPods(ctx context.Context, client *kubernetes.Clientset, namespace string) ([]Kpod, rest_errors.RestErr) {
 
-	pods, err := corev1.Pod.GetPods(ctx, client)
+	pods, err := corev1.Pod.GetPods(ctx, client, namespace)
 	if err != nil {
 		return nil, rest_errors.NewBadRequestError(err.Error())
 	}

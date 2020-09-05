@@ -5,6 +5,7 @@ go 1.14
 require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/validator/v10 v10.3.0 // indirect
+	github.com/gocql/gocql v0.0.0-20200815110948-5378c8f664e9
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/imdario/mergo v0.3.11 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect

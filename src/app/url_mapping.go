@@ -6,4 +6,5 @@ func urlMapping() {
 	router.POST("/deployment", controller.Kcontroller.CreateDeployment)
 	router.DELETE("/deployment", controller.Kcontroller.DeleteDeployment)
 	router.GET("/pods", controller.Kcontroller.GetPods)
+	router.POST("/register", controller.Kcontroller.AddUser)
 }

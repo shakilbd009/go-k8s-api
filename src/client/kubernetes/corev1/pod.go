@@ -4,7 +4,7 @@ import (
 	"context"
 
 	corev1 "k8s.io/api/core/v1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -13,13 +13,13 @@ var (
 )
 
 type podIinterface interface {
-	GetPods(context.Context, *kubernetes.Clientset) (*corev1.PodList, error)
+	GetPods(context.Context, *kubernetes.Clientset, string) (*corev1.PodList, error)
 }
 type pod struct{}
 
-func (*pod) GetPods(ctx context.Context, client *kubernetes.Clientset) (*corev1.PodList, error) {
+func (*pod) GetPods(ctx context.Context, client *kubernetes.Clientset, namespace string) (*corev1.PodList, error) {
 
-	pods, err := client.CoreV1().Pods(v1.NamespaceAll).List(ctx, v1.ListOptions{})
+	pods, err := client.CoreV1().Pods(namespace).List(ctx, metav1.ListOptions{})
 	if err != nil {
 		return nil, err
 	}
