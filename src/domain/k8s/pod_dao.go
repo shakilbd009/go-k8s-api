@@ -26,3 +26,12 @@ func (k *Kpod) GetPods(ctx context.Context, client *kubernetes.Clientset, namesp
 	}
 	return result, nil
 }
+
+func (k *Kpod) GetPodLogs(ctx context.Context, client *kubernetes.Clientset, namespace, podName string) ([]string, rest_errors.RestErr) {
+
+	logs, err := corev1.Pod.GetPodLogs(ctx, client, namespace, podName)
+	if err != nil {
+		return nil, rest_errors.NewBadRequestError(err.Error())
+	}
+	return logs, nil
+}

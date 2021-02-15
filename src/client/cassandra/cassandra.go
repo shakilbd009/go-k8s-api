@@ -15,7 +15,7 @@ func init() {
 	var err error
 	session, err = cluster.CreateSession()
 	if err != nil {
-		panic(err)
+		//panic(err)
 	}
 }
 

@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"k8s.io/client-go/kubernetes"
+	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	"k8s.io/client-go/tools/clientcmd"
 )
 
@@ -19,6 +20,7 @@ var (
 )
 
 func init() {
+
 	if kubeConfig == "" {
 		log.Fatalln(fmt.Errorf("env variable %s is not set", config))
 	}

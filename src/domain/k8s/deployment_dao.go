@@ -46,3 +46,16 @@ func (k *K8sDeployment) Delete(ctx context.Context, client *kubernetes.Clientset
 	k.Status = fmt.Sprintf(statusMsg, deletion)
 	return k, nil
 }
+
+func (k *K8sDeployments) CreateMultiContainer(ctx context.Context, client *kubernetes.Clientset) (*K8sDeployments, rest_errors.RestErr) {
+	resp, err := appsv1.Deployment.CreateMultiContainer(ctx,
+		client, k.Namespace, k.DeploymentName, k.Containers, &k.Replicas)
+	if err != nil {
+		return nil, rest_errors.NewBadRequestError(err.Error())
+	}
+	var result K8sDeployments
+	result.DeploymentName = k.DeploymentName
+	result.Status = fmt.Sprintf(statusMsg, creation)
+	result.CreationTime = resp
+	return &result, nil
+}
